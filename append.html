@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Append JS</title>
+</head>
+<body style="background-color: #333;">
+
+    <form id="add_form">
+        <input type="text" id="get_input" placeholder="Enter your text" autocomplete="off">
+        <button type="submit">Add</button>
+    </form>
+
+    <ul id="list"></ul>
+
+    <script>
+
+        var id = 0;
+        document.getElementById("add_form").addEventListener('submit', function(e){
+            id ++;
+            e.preventDefault();
+            let get_input = document.getElementById("get_input").value;
+            let list = document.getElementById("list");
+            let li = document.createElement("li");
+            li.style.listStyleType = "none";
+            li.setAttribute('id', "li_"+id+"");
+            let input = document.createElement('input');
+            input.setAttribute('type', 'text');
+            input.setAttribute('value', get_input);
+            input.setAttribute('id', 'input_'+id);
+            input.setAttribute('readonly', 'readonly');
+            let edit = document.createElement('button');
+            edit.innerText = 'Edit';
+            edit.setAttribute('onclick', 'edit('+id+')');
+            edit.setAttribute('id', 'edit_btn'+id+'');
+            let del = document.createElement('button');
+            del.innerText = 'Delete';
+            del.setAttribute('onclick', 'Delete('+id+')');
+            li.appendChild(input);
+            li.appendChild(edit);
+            li.appendChild(del);
+
+            list.appendChild(li);
+
+
+        });
+
+        function edit(id)
+        {
+            let input = document.getElementById("input_"+id+"");
+            input.removeAttribute('readonly');
+
+            let edit_btn = document.getElementById("edit_btn"+id+"");
+            edit_btn.innerText = "Save";
+            edit_btn.setAttribute('onclick', 'Save('+id+')');
+            edit_btn.setAttribute('id', 'save_btn'+id+'');
+        }
+
+        function Save(id)
+        {
+            let input = document.getElementById("input_"+id+"");
+            input.setAttribute('readonly', 'readonly');
+
+            let save_btn = document.getElementById("save_btn"+id+"");
+            save_btn.innerText = "Edit";
+            save_btn.setAttribute('onclick', 'edit('+id+')');
+            save_btn.setAttribute('id', 'edit_btn'+id+'');
+        }
+
+        function Delete(id)
+        {
+            let li = document.getElementById("li_"+id+"");
+            li.remove();
+        }
+
+    </script>
+</body>
+</html>
